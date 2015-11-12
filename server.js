@@ -10,9 +10,9 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 
 //set up public folder for css and js
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
-//set up view engine for hbs
+//set up view engine for hbs if server side render
 app.set('view engine', 'hbs');
 
 //seed data for to-do list
