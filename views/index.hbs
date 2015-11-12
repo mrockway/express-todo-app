@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<h1 class="text-center">to-do list</h1>
+				<h1 class="text-center todoHeader">to-do list</h1>
 				<hr>
 				<h2>add to your list:</h2>
 				<form class="todoForm input-group">
@@ -26,9 +26,16 @@
 		<div class="todoList row">
 			<script id="task-template" type="text/x-handlebars-template">
 				\{{#each data}}
-					<div class="col-md-8 col-md-offset-2" data-id=\{{_id}}>
+					<div class="col-md-8 col-md-offset-2 task" data-id=\{{_id}}>
 						<h3 class="task">Task: \{{task}}</h3>
 						<h3 class="description">Description \{{description}}</h3>
+						<button class="edit">Edit</button>
+						<form class="todoEdit input-group">
+							<input class="form-control" type="text" placeholder="EditTask" name="task">
+							<input class="form-control" type="text" placeholder="Edit Description" name="description">
+							<input class="form-control" type="submit">
+						</form>
+						<button class="delete">Remove</button>
 					</div>
 				\{{/each}}
 			</script>

@@ -2,6 +2,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/tododb');
 
 //set variable for express function
 var app = express();
@@ -10,7 +12,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 
 //set up public folder for css and js
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 //set up view engine for hbs if server side render
 app.set('view engine', 'hbs');
