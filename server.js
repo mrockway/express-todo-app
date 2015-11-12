@@ -2,6 +2,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+var mongoose = require('mongoose');
+
+//connect to mongoose db
+mongoose.connect('mongodb://localhost/tododb');
+
+//require Todo model from the todo.js file
+var Todo = require('./models/todo');
 
 //set variable for express function
 var app = express();
@@ -10,7 +17,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 
 //set up public folder for css and js
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 //set up view engine for hbs if server side render
 app.set('view engine', 'hbs');
@@ -27,42 +34,79 @@ var todos = [{_id: 1,
 							description: "make dinner"}
 							];
 
+/////////////////
+//API ROUTES////
+////////////////
+
+
 //route for the index page, prior to setting up index.hbs
 app.get('/', function(req,res) {
 	res.render('index');
 });
 
 //get route for requesting all the todos
+// app.get('/api/todos', function(req,res) {
+// 	res.json({todos: todos});
+// });
+
+////////////////////////////
+// mongo find all todos ///
+//////////////////////////
 app.get('/api/todos', function(req,res) {
-	res.json(todos);
+	Todo.find(function (err, allTodos) {
+		res.json({todos: allTodos});
+	});
 });
 
+
 //get route for requesting a single todo
+// app.get('/api/todos/:id', function(req,res) {
+// 	//set variable to convert id from URL into integer
+// 	var todoId = parseInt(req.params.id);
+// 	//set variable to look for todoID within the todos array
+// 	var todoDisplay = todos.filter(function(todo) {
+// 		return todo._id === todoId;
+// 	})[0];
+// 	res.json(todoDisplay);
+// });
+
+////////////////////////////////
+// mongo find one todo item ///
+//////////////////////////////
 app.get('/api/todos/:id', function(req,res) {
-	//set variable to convert id from URL into integer
-	var todoId = parseInt(req.params.id);
-	//set variable to look for todoID within the todos array
-	var todoDisplay = todos.filter(function(todo) {
-		return todo._id === todoId;
-	})[0];
-	res.json(todoDisplay);
+	var todoId = req.params.id;
+	Todo.findOne({_id: todoId}, function(err, foundTodo){
+		res.json(foundTodo);
+	});
 });
 
 //post new todo route
+/////////////////////////
+// app.post('/api/todos', function(req,res) {
+// 	//set variable to save new todo data
+// 	var newTodo = req.body;
+// 	//check if any id's have been created and assign one
+// 	if (todos.length > 0) {
+// 		newTodo._id = todos[todos.length -1]._id +1;
+// 	} else {
+// 		newTodo._id = 1;
+// 	}
+// 	//push new todo into array
+// 	todos.push(newTodo);
+// 	//send back confirmation of todo add
+// 	return res.json(newTodo);
+// });
+
+/////////////////////////////
+// mongo create new task  //
+///////////////////////////
 app.post('/api/todos', function(req,res) {
-	//set variable to save new todo data
-	var newTodo = req.body;
-	//check if any id's have been created and assign one
-	if (todos.length > 0) {
-		newTodo._id = todos[todos.length -1]._id +1;
-	} else {
-		newTodo._id = 1;
-	}
-	//push new todo into array
-	todos.push(newTodo);
-	//send back confirmation of todo add
-	return res.json(newTodo);
+	var newTodo = new Todo(req.body);
+	newTodo.save(function(err, savedTodo) {
+		res.json(savedTodo);
+	});
 });
+
 
 //update existing todo route
 app.put('/api/todos/:id', function(req,res) {
