@@ -1,12 +1,19 @@
 //require node packages
 var express = require('express');
 var bodyParser = require('body-parser');
+var hbs = require('hbs');
 
 //set variable for express function
 var app = express();
 
 //set up bodyParser to extract info from URL
 app.use(bodyParser.urlencoded({extended: true}));
+
+//set up public folder for css and js
+app.use(express.static('public'));
+
+//set up view engine for hbs
+app.set('view engine', 'hbs');
 
 //seed data for to-do list
 var todos = [{_id: 1,
@@ -21,9 +28,9 @@ var todos = [{_id: 1,
 							];
 
 //route for the index page, prior to setting up index.hbs
-// app.get('/', function(req,res) {
-// 	res.send("Hello World");
-// });
+app.get('/', function(req,res) {
+	res.render('index');
+});
 
 //get route for requesting all the todos
 app.get('/api/todos', function(req,res) {
