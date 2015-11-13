@@ -1,8 +1,41 @@
 body {
-	background-color: #337AB7;
+	background-image: url("legalpad.jpg");
+	background-size: 100%;
+	font-family: 'Handlee', cursive;
 }
-
+#line {
+	color: #101010;
+}
+button {
+  margin: 10px 5px 0 0;
+	text-align: right;
+}
+.glyphicon {
+	top: 4px;
+}
 .todoHeader {
-	color: #AAA7A7;
+	color: #D9534F;
 	font-size: 50px;
+	top: 29px;
+  position: relative;
+}
+.todoForm {
+	width: 100%;
+	border-radius: 5px;
+}
+.task {
+	background-color: rgba(204, 204, 204, 0.52);
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+.todoText {
+	font-size: 35px;
+}
+.todoDescription {
+	font-size: 20px;
+}
+.todoEdit {
+	font-size: 15px;
+	margin-bottom: 15px;
+	width: 100%;
 }

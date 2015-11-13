@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<!-- custom css -->
 	<link rel="stylesheet" href="styles.css">
+	<link href='https://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div class="container">
@@ -20,24 +21,25 @@
 					<input class="form-control" type="text" placeholder="Description" name="description">
 					<input class="form-control" type="submit">
 				</form>
+				<hr id="line">
 			</div> <!-- end of to-do header -->
 		</div> <!-- end of header row -->
 		<!-- begining of handlebars -->
 		<div class="todoList row">
 			<script id="task-template" type="text/x-handlebars-template">
 				\{{#each data}}
-					<div class="col-md-8 col-md-offset-2 task" data-id=\{{_id}}>
-						<h3 class="task">Task: \{{task}}</h3>
-						<h3 class="description">Description \{{description}}</h3>
-						<button class="edit">Edit</button>
-						<form class="todoEdit input-group">
-							<input class="form-control" type="text" placeholder="EditTask" name="task">
-							<input class="form-control" type="text" placeholder="Edit Description" name="description">
-							<input class="form-control" type="submit">
-						</form>
-						<button class="delete">Remove</button>
-						<br><br><hr>
-					</div>
+						<div class="col-md-8 col-md-offset-2 task" data-id=\{{_id}}>
+							<button class="edit pull-right"><span class="glyphicon glyphicon-pencil"></span></button>
+							<button class="delete pull-right"><span class="glyphicon glyphicon-trash"></span></button>
+							<p class="todoText">\{{task}}</p>
+							<p class="todoDescription"> -  \{{description}}</p>
+							<form class="todoEdit input-group">
+								<input class="form-control" type="text" placeholder="EditTask" name="task">
+								<input class="form-control" type="text" placeholder="Edit Description" name="description">
+								<input class="form-control" type="submit">
+							</form>
+						</div>
+						<hr>
 				\{{/each}}
 			</script>
 		</div>

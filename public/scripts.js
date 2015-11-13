@@ -10,7 +10,12 @@ var template = Handlebars.compile(source);
 
 var allTasks = [];
 
-$('.todoEdit').hide();
+
+
+
+$('.todoList').on('click', '.edit', function(event){
+	$('.todoEdit').toggle("fast");
+});
 
 //refresh book list on page
 var render = function() {
@@ -24,6 +29,7 @@ $.get('/api/todos/', function(data) {
 	todoResults = template({data : data.todos});
 	allTasks = (data.todos);
 	$('.todoList').append(todoResults);
+	$('.todoEdit').hide();
 	return todoResults;
 });
 
@@ -41,7 +47,8 @@ $('.todoForm').on('submit',function(event) {
 });
 
 //drop down edit form
-$('.edit').on('click','.edit', function(event){
+$('.todoList').on('click','.edit', function(event){
+	console.log('yes i clicked');
 	$('.todoEdit').show();
 });
 
