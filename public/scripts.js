@@ -10,9 +10,6 @@ var template = Handlebars.compile(source);
 
 var allTasks = [];
 
-
-
-
 $('.todoList').on('click', '.edit', function(event){
 	$('.todoEdit').toggle("fast");
 });
@@ -38,17 +35,13 @@ $('.todoForm').on('submit',function(event) {
 	event.preventDefault();
 	var newTask = $(this).serialize();
 	$.post('/api/todos/',newTask, function(data) {
-		console.log("before",allTasks);
 		allTasks.push(data);
-		console.log("data",data);
-		console.log("after",allTasks);
 		render();
 	});	 
 });
 
 //drop down edit form
 $('.todoList').on('click','.edit', function(event){
-	console.log('yes i clicked');
 	$('.todoEdit').show();
 });
 
@@ -56,9 +49,7 @@ $('.todoList').on('click','.edit', function(event){
 $('.todoList').on('submit', '.todoEdit', function(event){
 	event.preventDefault();
 	var editTask = $(this).serialize();
-	console.log(editTask);
 	var taskId = $(this).closest('.task').attr('data-id');
-	console.log(taskId);
 	var taskUpdate = allTasks.filter(function(task) {
 		return (allTasks._id == taskId);
 	})[0];
@@ -77,7 +68,6 @@ $('.todoList').on('submit', '.todoEdit', function(event){
 $('.todoList').on('click', '.delete', function(event){
 	event.preventDefault();
 	var taskId = $(this).closest('.task').attr('data-id');
-	console.log(taskId);
 	var taskRemove = allTasks.filter(function(task) {
 		return allTasks._id == taskId;
 	})[0];

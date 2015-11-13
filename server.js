@@ -60,6 +60,7 @@ app.get('/api/todos/:id', function(req,res) {
 app.post('/api/todos', function(req,res) {
 	var newTodo = new Todo(req.body);
 	newTodo.save(function(err, savedTodo) {
+		console.error(err);
 		res.json(savedTodo);
 	});
 });
@@ -71,6 +72,7 @@ app.put('/api/todos/:id', function(req,res) {
 		foundTodo.task = req.body.task;
 		foundTodo.description = req.body.description;
 		foundTodo.save(function (err, savedTodo) {
+			res.json(err);
 			res.json(savedTodo);
 		});
 	});
