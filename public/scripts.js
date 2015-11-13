@@ -1,3 +1,5 @@
+$(function() {
+
 console.log("10-4 little buddy");
 
 //set up variable for data
@@ -17,10 +19,10 @@ var render = function() {
 	$('.todoList').append(todoHtml);
 };
 
-//get request, put books on the page
-$.get('http://localhost:3000/api/todos/', function(data) {
-	todoResults = template({data : data});
-	allTasks = data;
+//get request, put todos on the page
+$.get('/api/todos/', function(data) {
+	todoResults = template({data : data.todos});
+	allTasks = (data.todos);
 	$('.todoList').append(todoResults);
 	return todoResults;
 });
@@ -29,9 +31,11 @@ $.get('http://localhost:3000/api/todos/', function(data) {
 $('.todoForm').on('submit',function(event) {
 	event.preventDefault();
 	var newTask = $(this).serialize();
-	$.post('http://localhost:3000/api/todos/',newTask, function(data) {
-		console.log(data);
+	$.post('/api/todos/',newTask, function(data) {
+		console.log("before",allTasks);
 		allTasks.push(data);
+		console.log("data",data);
+		console.log("after",allTasks);
 		render();
 	});	 
 });
@@ -49,11 +53,11 @@ $('.todoList').on('submit', '.todoEdit', function(event){
 	var taskId = $(this).closest('.task').attr('data-id');
 	console.log(taskId);
 	var taskUpdate = allTasks.filter(function(task) {
-		return allTasks._id == taskId;
+		return (allTasks._id == taskId);
 	})[0];
 	$.ajax({
 		type: 'PUT',
-		url: 'http://localhost:3000/api/todos/'+taskId,
+		url: '/api/todos/'+taskId,
 		data: editTask,
 		success: function(data){
 			allTasks.splice(allTasks.indexOf(taskUpdate), 1, data);
@@ -72,7 +76,7 @@ $('.todoList').on('click', '.delete', function(event){
 	})[0];
 	$.ajax({
 		type: 'DELETE',
-		url: 'http://localhost:3000/api/todos/'+taskId,
+		url: '/api/todos/'+taskId,
 		success: function(data){
 			allTasks.splice(allTasks.indexOf(taskRemove), 1);
 			render();
@@ -80,6 +84,7 @@ $('.todoList').on('click', '.delete', function(event){
 	});
 });
 
+}); // end of doc ready
 
 
 

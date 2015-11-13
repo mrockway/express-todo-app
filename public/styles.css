@@ -1,3 +1,8 @@
 body {
 	background-color: #337AB7;
 }
+
+.todoHeader {
+	color: #AAA7A7;
+	font-size: 50px;
+}
